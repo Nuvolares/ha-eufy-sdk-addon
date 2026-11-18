@@ -17,3 +17,12 @@ configuration:
   solix_country:
     name: Solix country code (optional)
     description: Two-letter Solix account country (e.g. GB, DE). Leave empty to reuse the eufy country above.
+  nvr_extra_media_models:
+    name: Extra NVR camera models (fork)
+    description: Camera models (comma-separated, e.g. T8172) that get live video through the S4 NVR's media call, beyond the SDK's own tested list. Empty = the SDK's list only. Experimental.
+  h264_twin:
+    name: H.264 copy of each stream (fork)
+    description: Keep an on-demand H.264 copy of every camera stream, so browsers without H.265 WebRTC can play H.265 cameras. Transcodes only while someone watches it.
+  h264_width:
+    name: H.264 copy width (fork)
+    description: Width the H.264 copy is scaled to, in pixels (0 = keep the camera's size). Lower is lighter on the CPU.

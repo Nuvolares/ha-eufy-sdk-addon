@@ -41,7 +41,13 @@ clip_ms="$(jq -r '.clip_settle_ms // empty' "$OPTS")"
 [ "$(jq -r '.debug // false' "$OPTS")" = "true" ] && export BRIDGE_DEBUG=1
 [ "$(jq -r '.debug_p2p // false' "$OPTS")" = "true" ] && export BRIDGE_DEBUG_P2P=1
 # Bundled go2rtc is on by default; only pass the override when the user turns it off.
-[ "$(jq -r '.go2rtc_enable // true' "$OPTS")" = "false" ] && export GO2RTC_ENABLE=0
+# [fork] Read the bool as-is: jq's `//` treats false as missing, so `.go2rtc_enable // true` never saw false.
+[ "$(jq -r '.go2rtc_enable' "$OPTS")" = "false" ] && export GO2RTC_ENABLE=0
+# [fork] More cameras through the NVR (empty = the SDK's own list), and the on-demand H.264 twins.
+export NVR_EXTRA_MEDIA_MODELS="$(jq -r 'if has("nvr_extra_media_models") then (.nvr_extra_media_models // "") else "T8172" end' "$OPTS")"
+[ "$(jq -r '.h264_twin' "$OPTS")" = "false" ] && export GO2RTC_H264=0
+export GO2RTC_H264_WIDTH="$(jq -r '.h264_width // 1920' "$OPTS")"
+echo "[addon] fork: NVR extra media models='${NVR_EXTRA_MEDIA_MODELS}', H.264 twins ${GO2RTC_H264:-on} (width ${GO2RTC_H264_WIDTH})"
 
 # Optional Anker Solix (a SEPARATE Anker account from eufy). Empty email/password ⇒ Solix stays off
 # (the bridge enables it only when BOTH are set). Empty country ⇒ the bridge falls back to EUFY_COUNTRY.

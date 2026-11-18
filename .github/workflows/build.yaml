@@ -1,0 +1,46 @@
+# [fork] Build the add-on image exactly as the Supervisor will (amd64) and smoke-test it.
+name: Build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Read build args
+        id: args
+        run: |
+          cd eufy_sdk_bridge_fork
+          echo "ref=$(sed -n 's/^  BRIDGE_REF: //p' build.yaml)" >> "$GITHUB_OUTPUT"
+          echo "repo=$(sed -n 's/^  BRIDGE_REPO: //p' build.yaml)" >> "$GITHUB_OUTPUT"
+          echo "sdk=$(sed -n 's/^  SDK_DIST_TAG: //p' build.yaml)" >> "$GITHUB_OUTPUT"
+      - name: Build image
+        run: |
+          docker build -t addon-test \
+            --build-arg BUILD_FROM=node:24-alpine \
+            --build-arg BUILD_ARCH=amd64 \
+            --build-arg BRIDGE_REPO=${{ steps.args.outputs.repo }} \
+            --build-arg BRIDGE_REF=${{ steps.args.outputs.ref }} \
+            --build-arg SDK_DIST_TAG=${{ steps.args.outputs.sdk }} \
+            eufy_sdk_bridge_fork
+      - name: Smoke test
+        run: |
+          set -e
+          docker run --rm --entrypoint sh addon-test -c '
+            set -e
+            go2rtc -version
+            ffmpeg -hide_banner -encoders | grep -q libx264 && echo "ffmpeg has libx264"
+            node -e "console.log(\"SDK\", require(\"/app/node_modules/@mega-yfue/eufy-sdk/package.json\").version)"
+            grep -q __FORK_NVR_EXTRA_MEDIA_MODELS /app/node_modules/@mega-yfue/eufy-sdk/dist/index.js && echo "NVR patch applied"
+            cd /app && for f in server.mjs go2rtc-config.mjs src/*.mjs; do node --check "$f"; done && echo "bridge modules parse"
+            node -e "import(\"/app/go2rtc-config.mjs\").then(m => console.log(m.h264Twin(\"CAM\").join(\"\n\")))"
+            test -x /usr/local/bin/eufy-sdk-bridge && test -x /run.sh && echo "entrypoints present"
+          '

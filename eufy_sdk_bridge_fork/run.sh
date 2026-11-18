@@ -44,7 +44,9 @@ clip_ms="$(jq -r '.clip_settle_ms // empty' "$OPTS")"
 # [fork] Read the bool as-is: jq's `//` treats false as missing, so `.go2rtc_enable // true` never saw false.
 [ "$(jq -r '.go2rtc_enable' "$OPTS")" = "false" ] && export GO2RTC_ENABLE=0
 # [fork] More cameras through the NVR (empty = the SDK's own list), and the on-demand H.264 twins.
-export NVR_EXTRA_MEDIA_MODELS="$(jq -r 'if has("nvr_extra_media_models") then (.nvr_extra_media_models // "") else "T8172" end' "$OPTS")"
+# A cleared optional field is dropped from options.json, so a missing key means "none" (default T8172 is
+# filled in by the Supervisor from config.yaml on install).
+export NVR_EXTRA_MEDIA_MODELS="$(jq -r '.nvr_extra_media_models // ""' "$OPTS")"
 [ "$(jq -r '.h264_twin' "$OPTS")" = "false" ] && export GO2RTC_H264=0
 export GO2RTC_H264_WIDTH="$(jq -r '.h264_width // 1920' "$OPTS")"
 echo "[addon] fork: NVR extra media models='${NVR_EXTRA_MEDIA_MODELS}', H.264 twins ${GO2RTC_H264:-on} (width ${GO2RTC_H264_WIDTH})"

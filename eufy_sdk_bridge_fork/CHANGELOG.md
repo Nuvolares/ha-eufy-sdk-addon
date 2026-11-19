@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.3.0
+
+- Bridge `42bc029`: a timed still refresh (`mode=live`) of a battery camera gets a second try, since a
+  camera behind the NVR (S3 Pro) can take longer than the SDK's fixed 20 s to wake. Fewer log lines.
+  Pair with integration 1.2.0, which also refreshes the second (PTZ) lens.
+
 ## 1.2.0
 
 - New option `mains_powered_models` (default `T8214`): those models count as mains-powered although they

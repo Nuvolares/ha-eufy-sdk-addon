@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.9.0-fork.3
+
+- H.264 copy (`_h264`) now transcodes from the bridge feed itself. Before, an H.265 camera opened
+  cold for the first time could load forever: the copy locked onto the H.264 stand-in picture.
+
 ## 0.9.0-fork.2
 
 - Fix install failing with "exit code: 127": the Supervisor built on its own base image (no Node)

@@ -14,7 +14,7 @@ FROM node:24-alpine
 ARG BUILD_ARCH
 ARG GO2RTC_VERSION=1.9.9
 ARG BRIDGE_REPO=Nuvolares/ha-eufy-sdk-bridge
-ARG BRIDGE_REF=c62eacfc0d39b7344872e6b955cbc4639783c6d4
+ARG BRIDGE_REF=b8277a7faf3ec61652112b9c046c188f13884de5
 ARG SDK_DIST_TAG=0.6.0-beta.72
 
 # ffmpeg: the bridge's live feeds and go2rtc's on-demand H.264 twins. jq + curl: run.sh (options, discovery).

@@ -2,15 +2,19 @@
 #
 # [fork] Builds the bridge FROM SOURCE on your Home Assistant host: no prebuilt image to publish or pull.
 # It mirrors the bridge's own Dockerfile, but fetches the bridge from BRIDGE_REPO at the pinned
-# BRIDGE_REF (set in build.yaml), installs the pinned beta SDK and applies the fork's NVR patch.
-# Bump the add-on version after changing build.yaml so the Supervisor rebuilds.
-ARG BUILD_FROM=node:24-alpine
-FROM ${BUILD_FROM}
+# BRIDGE_REF, installs the pinned beta SDK and applies the fork's NVR patch.
+# Bump the add-on version after changing BRIDGE_REF so the Supervisor rebuilds.
+#
+# The base is fixed on purpose. Newer Supervisors ignore build.yaml's build_from and pass their own
+# HA base image (no Node), which failed with "exit code: 127". Do not switch this to ${BUILD_FROM}.
+FROM node:24-alpine
 
-ARG BUILD_ARCH=amd64
+# These defaults are the real pins. The Supervisor may or may not pass build.yaml's args, so the
+# values there must match these.
+ARG BUILD_ARCH
 ARG GO2RTC_VERSION=1.9.9
 ARG BRIDGE_REPO=Nuvolares/ha-eufy-sdk-bridge
-ARG BRIDGE_REF=main
+ARG BRIDGE_REF=c62eacfc0d39b7344872e6b955cbc4639783c6d4
 ARG SDK_DIST_TAG=0.6.0-beta.72
 
 # ffmpeg: the bridge's live feeds and go2rtc's on-demand H.264 twins. jq + curl: run.sh (options, discovery).
@@ -18,16 +22,17 @@ RUN apk add --no-cache ffmpeg curl jq
 
 WORKDIR /app
 
-RUN case "${BUILD_ARCH}" in \
-      amd64) g2="go2rtc_linux_amd64" ;; \
-      aarch64) g2="go2rtc_linux_arm64" ;; \
-      *) echo "unsupported BUILD_ARCH: ${BUILD_ARCH}" && exit 1 ;; \
+RUN arch="${BUILD_ARCH:-$(uname -m)}" \
+ && case "${arch}" in \
+      amd64|x86_64) g2="go2rtc_linux_amd64" ;; \
+      aarch64|arm64) g2="go2rtc_linux_arm64" ;; \
+      *) echo "unsupported arch: ${arch}" && exit 1 ;; \
     esac \
  && curl -fsSL -o /usr/local/bin/go2rtc \
       "https://github.com/AlexxIT/go2rtc/releases/download/v${GO2RTC_VERSION}/${g2}" \
  && chmod +x /usr/local/bin/go2rtc
 
-RUN echo "bridge: ${BRIDGE_REPO}@${BRIDGE_REF}, SDK: ${SDK_DIST_TAG}" \
+RUN echo "bridge: ${BRIDGE_REPO}@${BRIDGE_REF}, SDK: ${SDK_DIST_TAG}, node: $(node --version)" \
  && curl -fsSL "https://codeload.github.com/${BRIDGE_REPO}/tar.gz/${BRIDGE_REF}" \
       | tar -xz --strip-components=1 -C /app \
  && npm ci --omit=dev --no-audit --no-fund \

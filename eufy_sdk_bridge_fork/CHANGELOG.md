@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.9.0-fork.2
+
+- Fix install failing with "exit code: 127": the Supervisor built on its own base image (no Node)
+  instead of build.yaml's `build_from`. The Dockerfile now has a fixed `node:24-alpine` base.
+
 ## 0.9.0-fork.1
 
 - Fork of the upstream dev add-on, built locally from Nuvolares/ha-eufy-sdk-bridge (upstream `dev` +

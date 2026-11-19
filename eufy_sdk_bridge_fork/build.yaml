@@ -1,10 +1,8 @@
 # https://developers.home-assistant.io/docs/add-ons/configuration#add-on-buildyaml
 #
-# [fork] Built locally by the Supervisor (config.yaml has no `image:`). BRIDGE_REF pins the bridge commit;
-# change it, bump the add-on version, and the Supervisor rebuilds on update.
-build_from:
-  aarch64: node:24-alpine
-  amd64: node:24-alpine
+# [fork] Built locally by the Supervisor (config.yaml has no `image:`). The Dockerfile has a fixed
+# node:24-alpine base and carries the same pins as ARG defaults; CI checks the two match.
+# To move the bridge: change BRIDGE_REF here AND in the Dockerfile, then bump the add-on version.
 args:
   BRIDGE_REPO: Nuvolares/ha-eufy-sdk-bridge
   BRIDGE_REF: c62eacfc0d39b7344872e6b955cbc4639783c6d4

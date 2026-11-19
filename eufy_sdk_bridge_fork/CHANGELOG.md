@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.1.0
+
+- Bridge `287a456`: a live still taken on request (`mode=live`) is kept, so the camera tile shows it.
+  Needed by the integration's new "Refresh battery camera stills" option (integration 1.1.0).
+
 ## 1.0.0
 
 - Own version numbers from here on (they no longer follow upstream's). Based on upstream add-on

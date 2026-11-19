@@ -8,7 +8,7 @@
 One add-on, **eufy-sdk bridge (Nuvolares fork)**. Unlike upstream it pulls no prebuilt image: the Supervisor
 **builds it on your Home Assistant host** from
 [Nuvolares/ha-eufy-sdk-bridge](https://github.com/Nuvolares/ha-eufy-sdk-bridge) at the commit pinned in
-[`eufy_sdk_bridge_fork/build.yaml`](eufy_sdk_bridge_fork/build.yaml). The first install takes a few minutes.
+[`eufy_sdk_bridge_fork/Dockerfile`](eufy_sdk_bridge_fork/Dockerfile) (`BRIDGE_REF`). The first install takes a few minutes.
 
 What the fork bridge adds on top of upstream `dev`:
 
@@ -18,6 +18,13 @@ What the fork bridge adds on top of upstream `dev`:
   option uses it.
 - **More cameras through an S4 NVR**: option `nvr_extra_media_models` (default `T8172`, eufyCam S4).
   Experimental.
+- **Second (PTZ) lens** for those models as its own camera, like the S4 Max PoE: option
+  `nvr_extra_dual_lens` (default on). Experimental.
+
+## Versioning
+
+This fork has its own version numbers, starting at **1.0.0**. They don't follow upstream's; each
+[changelog](eufy_sdk_bridge_fork/CHANGELOG.md) entry names the upstream base it builds on.
 
 ## Install
 

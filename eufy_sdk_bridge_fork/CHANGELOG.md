@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.0
+
+- Own version numbers from here on (they no longer follow upstream's). Based on upstream add-on
+  `dev` and Nuvolares/ha-eufy-sdk-bridge `f7a9ce2` (upstream bridge `dev` + fork changes), SDK `0.6.0-beta.72`.
+- Regular add-on icon and logo instead of the dev ones.
+
 ## 0.9.0-fork.4
 
 - New option `nvr_extra_dual_lens` (default on): the extra NVR models (T8172, eufyCam S4) also get their

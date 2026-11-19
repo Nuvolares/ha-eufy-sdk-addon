@@ -45,6 +45,7 @@ jobs:
             node -e "console.log(\"SDK\", require(\"/app/node_modules/@mega-yfue/eufy-sdk/package.json\").version)"
             grep -q __FORK_NVR_EXTRA_MEDIA_MODELS /app/node_modules/@mega-yfue/eufy-sdk/dist/index.js && echo "NVR patch applied"
             grep -q __FORK_NVR_DUAL_LENS_MODELS /app/node_modules/@mega-yfue/eufy-sdk/dist/index.js && echo "NVR dual-lens patch applied"
+            grep -q __FORK_POWER_MAINS_MODELS /app/node_modules/@mega-yfue/eufy-sdk/dist/index.js && echo "mains-model patch applied"
             cd /app && for f in server.mjs go2rtc-config.mjs src/*.mjs; do node --check "$f"; done && echo "bridge modules parse"
             node -e "import(\"/app/go2rtc-config.mjs\").then(m => console.log(m.h264Twin(\"CAM\", \"http://127.0.0.1:3000/stream/CAM\").join(\"\n\")))"
             test -x /usr/local/bin/eufy-sdk-bridge && test -x /run.sh && echo "entrypoints present"

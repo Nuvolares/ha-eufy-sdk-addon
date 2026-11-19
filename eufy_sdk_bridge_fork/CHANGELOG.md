@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.2.0
+
+- New option `mains_powered_models` (default `T8214`): those models count as mains-powered although they
+  report a battery, e.g. a doorbell on a transformer. They get normal live streams (HLS) without the
+  45 s battery limit, and live stills. Their battery level sensor stays. Bridge `7a5e7c0`.
+
 ## 1.1.0
 
 - Bridge `287a456`: a live still taken on request (`mode=live`) is kept, so the camera tile shows it.

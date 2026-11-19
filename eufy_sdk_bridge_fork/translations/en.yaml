@@ -20,6 +20,9 @@ configuration:
   nvr_extra_media_models:
     name: Extra NVR camera models (fork)
     description: Camera models (comma-separated, e.g. T8172) that get live video through the S4 NVR's media call, beyond the SDK's own tested list. Empty = the SDK's list only. Experimental.
+  nvr_extra_dual_lens:
+    name: Second lens for the extra models (fork)
+    description: Also show the second (PTZ) lens of the extra NVR models as its own camera, like the S4 Max PoE. Each lens wakes the camera when opened. Experimental.
   h264_twin:
     name: H.264 copy of each stream (fork)
     description: Keep an on-demand H.264 copy of every camera stream, so browsers without H.265 WebRTC can play H.265 cameras. Transcodes only while someone watches it.

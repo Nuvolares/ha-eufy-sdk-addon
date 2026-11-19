@@ -4,7 +4,7 @@
 # more NVR cameras). Built LOCALLY by the Supervisor from the Dockerfile (no `image:`). It shares the
 # ports and the eufy account session with the upstream add-ons, so run only ONE bridge at a time.
 name: eufy-sdk bridge (Nuvolares fork)
-version: "0.9.0-fork.3"
+version: "0.9.0-fork.4"
 slug: eufy_sdk_bridge_fork
 description: ha-eufy-sdk bridge (fork) — H.264 live view for H.265 cameras and more cameras behind an S4 NVR. Run one bridge per eufy account.
 url: "https://github.com/Nuvolares/ha-eufy-sdk-addon/tree/main/eufy_sdk_bridge_fork"
@@ -48,6 +48,8 @@ options:
   go2rtc_enable: true
   # [fork] Extra camera models served through the S4 NVR's media call (comma-separated).
   nvr_extra_media_models: "T8172"
+  # [fork] Also offer the second (PTZ) lens of those models, as on the S4 Max PoE.
+  nvr_extra_dual_lens: true
   # [fork] On-demand H.264 copy of each camera stream, and its scaled width (0 = source size).
   h264_twin: true
   h264_width: 1920
@@ -97,6 +99,7 @@ schema:
   # on the same host (ports 8554/1984), so the bundled one does not clash with it.
   go2rtc_enable: bool
   nvr_extra_media_models: "str?"
+  nvr_extra_dual_lens: bool
   h264_twin: bool
   h264_width: int(0,)
   # Anker Solix account (separate from eufy). Fill BOTH email + password to enable Solix; empty = off.

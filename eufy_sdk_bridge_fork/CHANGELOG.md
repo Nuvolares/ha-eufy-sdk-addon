@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.9.0-fork.4
+
+- New option `nvr_extra_dual_lens` (default on): the extra NVR models (T8172, eufyCam S4) also get their
+  second, PTZ lens as its own camera, like the S4 Max PoE. Experimental.
+
 ## 0.9.0-fork.3
 
 - H.264 copy (`_h264`) now transcodes from the bridge feed itself. Before, an H.265 camera opened

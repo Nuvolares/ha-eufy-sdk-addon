@@ -47,12 +47,10 @@ clip_ms="$(jq -r '.clip_settle_ms // empty' "$OPTS")"
 # A cleared optional field is dropped from options.json, so a missing key means "none" (default T8172 is
 # filled in by the Supervisor from config.yaml on install).
 export NVR_EXTRA_MEDIA_MODELS="$(jq -r '.nvr_extra_media_models // ""' "$OPTS")"
-# A missing key (an install from before this option) means on.
-if [ "$(jq -r '.nvr_extra_dual_lens' "$OPTS")" = "false" ]; then export NVR_DUAL_LENS_MODELS=""; else export NVR_DUAL_LENS_MODELS="${NVR_EXTRA_MEDIA_MODELS}"; fi
 export POWER_MAINS_MODELS="$(jq -r '.mains_powered_models // ""' "$OPTS")"
 [ "$(jq -r '.h264_twin' "$OPTS")" = "false" ] && export GO2RTC_H264=0
 export GO2RTC_H264_WIDTH="$(jq -r '.h264_width // 1920' "$OPTS")"
-echo "[addon] fork: NVR extra media models='${NVR_EXTRA_MEDIA_MODELS}', second lens for '${NVR_DUAL_LENS_MODELS}', mains-powered '${POWER_MAINS_MODELS}', H.264 twins ${GO2RTC_H264:-on} (width ${GO2RTC_H264_WIDTH})"
+echo "[addon] fork: NVR extra media models='${NVR_EXTRA_MEDIA_MODELS}', mains-powered '${POWER_MAINS_MODELS}', H.264 twins ${GO2RTC_H264:-on} (width ${GO2RTC_H264_WIDTH})"
 
 # Optional Anker Solix (a SEPARATE Anker account from eufy). Empty email/password ⇒ Solix stays off
 # (the bridge enables it only when BOTH are set). Empty country ⇒ the bridge falls back to EUFY_COUNTRY.

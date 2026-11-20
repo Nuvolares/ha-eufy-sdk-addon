@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.4.0
+
+- Removed the option `nvr_extra_dual_lens`. The NVR sends the eufyCam S4's two lenses as one stitched
+  picture, so the separate second lens only repeated it. The S4 is now one camera showing both lenses.
+  The S4 Max PoE keeps its two lenses (the SDK's own list). Bridge `1f20c40`.
+
 ## 1.3.1
 
 - Bridge `81b5a04`: the H.264 live view no longer fails on a picture whose scaled height is odd. The NVR

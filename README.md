@@ -18,8 +18,6 @@ What the fork bridge adds on top of upstream `dev`:
   option uses it.
 - **More cameras through an S4 NVR**: option `nvr_extra_media_models` (default `T8172`, eufyCam S4).
   Experimental.
-- **Second (PTZ) lens** for those models as its own camera, like the S4 Max PoE: option
-  `nvr_extra_dual_lens` (default on). Experimental.
 
 ## Versioning
 

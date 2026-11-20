@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.3.1
+
+- Bridge `81b5a04`: the H.264 live view no longer fails on a picture whose scaled height is odd. The NVR
+  sent the eufyCam S4 as one stitched frame of both lenses (1920x2171), and the encoder refused it.
+
 ## 1.3.0
 
 - Bridge `42bc029`: a timed still refresh (`mode=live`) of a battery camera gets a second try, since a

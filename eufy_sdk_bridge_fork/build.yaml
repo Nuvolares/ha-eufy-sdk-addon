@@ -5,7 +5,7 @@
 # To move the bridge: change BRIDGE_REF here AND in the Dockerfile, then bump the add-on version.
 args:
   BRIDGE_REPO: Nuvolares/ha-eufy-sdk-bridge
-  BRIDGE_REF: 1f20c40a828eb836ef58a375390dc28cdb61953e
+  BRIDGE_REF: 5ad228a82d48fb686eca317c8a91a9b74e41a6d1
   SDK_DIST_TAG: 0.6.0-beta.72
 labels:
   org.opencontainers.image.source: "https://github.com/Nuvolares/ha-eufy-sdk-addon"

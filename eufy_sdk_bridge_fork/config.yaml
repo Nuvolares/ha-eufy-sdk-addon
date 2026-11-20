@@ -4,7 +4,7 @@
 # more NVR cameras). Built LOCALLY by the Supervisor from the Dockerfile (no `image:`). It shares the
 # ports and the eufy account session with the upstream add-ons, so run only ONE bridge at a time.
 name: eufy-sdk bridge (Nuvolares fork)
-version: "1.4.0"
+version: "1.4.1"
 slug: eufy_sdk_bridge_fork
 description: ha-eufy-sdk bridge (fork) — H.264 live view for H.265 cameras and more cameras behind an S4 NVR. Run one bridge per eufy account.
 url: "https://github.com/Nuvolares/ha-eufy-sdk-addon/tree/main/eufy_sdk_bridge_fork"

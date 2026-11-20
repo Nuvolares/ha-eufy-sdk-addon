@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.4.1
+
+- Bridge `5ad228a`: the second try of a battery camera's timed still waits 40 s for a clean picture
+  instead of 20 s. An awake eufyCam S3 Pro behind the NVR often needs longer, so its refresh failed.
+
 ## 1.4.0
 
 - Removed the option `nvr_extra_dual_lens`. The NVR sends the eufyCam S4's two lenses as one stitched
